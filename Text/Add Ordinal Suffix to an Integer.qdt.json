@@ -1,0 +1,45 @@
+{
+  "templateName": "Add Ordinal Suffix to an Integer",
+  "parameters": [
+    {
+      "parameterKey": "__BaseMeasure",
+      "dataType": [
+        "string"
+      ],
+      "displayName": "Input Measure Name",
+      "defaultValue": "",
+      "description": "",
+      "selectionKind": "measure"
+    }
+  ],
+  "encoding": [
+    {
+      "format": {
+        "formatString": "text",
+        "UseParenthesisForNegativeValues": "",
+        "UseThousandSeparator": ""
+      },
+      "objectType": "measure",
+      "name": "Measure With Ordinal Suffix",
+      "expression": "\n= \nVAR BaseMeasure = [__BaseMeasure]\nVAR Last2Digits =\n    RIGHT ( BaseMeasure, 2 )\nVAR LastDigit =\n    RIGHT ( BaseMeasure, 1 )\nVAR SuffixForInteger = \n    \"0\" & SWITCH (\n            TRUE (),\n            Last2Digits IN { \"11\", \"12\", \"13\" }, \"th\",\n            LastDigit = \"1\", \"st\",\n            LastDigit = \"2\", \"nd\",\n            LastDigit = \"3\", \"rd\",\n            \"th\"\n        )\nVAR Result =\n    IF(\n        BaseMeasure = INT(BaseMeasure),\n        FORMAT ( BaseMeasure, SuffixForInteger ),\n        \"Error: Base Measure does not return an integer\"\n    )\nRETURN\n    Result",
+      "description": "Takes an measure that returns an integer value, and appends an ordinal suffix to the result. E.g. the number 23 becomes \"23rd\"",
+      "folder": "",
+      "hidden": "false"
+    }
+  ],
+  "tags": [],
+  "authors": [
+    "Sam Fischer"
+  ],
+  "instructions": [
+    "Select a measure from your data model that returns an integer. If the supplied base measure returns a decimal, the result will be a string containing an error message (since adding a suffix is only meaningful for integers). "
+  ],
+  "supportURLs": [
+    "https://apexinsights.net/blog/ordinal-numbers-smart-narratives",
+    "https://www.linkedin.com/in/sam-fischer-24382287/"
+  ],
+  "description": "Takes an integer value and appends an ordinal suffix. ",
+  "buildVersion": "v1.0.0",
+  "uniqueId": "b7f84807-9b91-4f52-91fc-df3b072b842c",
+  "schemaVersion": "https://github.com/PowerBI-tips/DAX-Templates/blob/main/schema/v1.ts"
+}
